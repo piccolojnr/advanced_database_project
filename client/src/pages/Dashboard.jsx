@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { Link } from 'react-router-dom';
 import SpeciesTable from "../components/SpeciesTable";
 import SpeciesForm from "../components/SpeciesForm";
 import { Dialog } from "@headlessui/react";
@@ -90,7 +91,15 @@ export default function Dashboard() {
                 Rain Forest Exotics
               </h1>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center space-x-4">
+              {user?.role === 'ADMIN' && (
+                <Link
+                  to="/signup"
+                  className="px-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-900"
+                >
+                  Add User
+                </Link>
+              )}
               <span className="text-gray-700 mr-4">
                 Welcome, {user?.username}
               </span>

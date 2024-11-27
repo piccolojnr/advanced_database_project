@@ -25,8 +25,8 @@ router.get('/', auth, async (req, res) => {
     if (status) where.status = status;
     if (search) {
       where[Op.or] = [
-        { name: { [Op.iLike]: `%${search}%` } },
-        { scientificName: { [Op.iLike]: `%${search}%` } }
+        { name: { [Op.like]: `%${search}%` } },
+        { scientificName: { [Op.like]: `%${search}%` } }
       ];
     }
 

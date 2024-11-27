@@ -1,52 +1,52 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    role: 'STAFF'
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    role: "STAFF",
   });
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
+      await axios.post("http://localhost:3000/api/auth/register", {
         username: formData.username,
         email: formData.email,
         password: formData.password,
-        role: formData.role
+        role: formData.role,
       });
 
-      toast.success('User created successfully!');
-      navigate('/dashboard');
+      toast.success("User created successfully!");
+      navigate("/dashboard");
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Failed to create user');
+      toast.error(error.response?.data?.error || "Failed to create user");
     }
   };
 
-  if (!user || user.role !== 'ADMIN') {
+  if (!user || user.role !== "ADMIN") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center text-red-600">

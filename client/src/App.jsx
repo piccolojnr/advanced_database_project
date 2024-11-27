@@ -1,11 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import LoginForm from './components/LoginForm';
-import SignupForm from './components/SignupForm';
-import Dashboard from './pages/Dashboard';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
+import Dashboard from "./pages/Dashboard";
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -32,7 +37,7 @@ function AdminRoute({ children }) {
     );
   }
 
-  return user?.role === 'ADMIN' ? children : <Navigate to="/dashboard" />;
+  return user?.role === "ADMIN" ? children : <Navigate to="/dashboard" />;
 }
 
 function App() {
@@ -51,6 +56,14 @@ function App() {
             }
           />
           <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <Dashboard />
+              </AdminRoute>
+            }
+          />
         </Routes>
       </Router>
       <ToastContainer position="top-right" autoClose={3000} />
